@@ -1,11 +1,14 @@
 package array;
 
+import java.util.HashMap;
+
 public class SlidingWindow {
     public static void main(String[] args) {
-        int[] arr = {1, 8, 30, -5, 20, 7};
+        int[] arr = {1,5,4,2,9,9,9};
         int k = 3;
         // int res = maxSumOfK(arr, k);
-        int res = slidingWindow(arr, k);
+        //int res = slidingWindow(arr, k);
+        int res = maximumSubarraySum(arr, k);
         System.out.println(res);
     }
 
@@ -38,5 +41,36 @@ public class SlidingWindow {
 
         }
         return maxCount;
+    }
+
+    // maximum sum of distinct subarray with length k
+
+    public static int maximumSubarraySum(int[] nums, int k) {
+        int result = 0;
+        int currentSum = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            // Add the current element to the window
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+            currentSum += nums[i];
+
+            // If the window size exceeds k, adjust the window from the left (remove the leftmost element)
+            if (i >= k) {
+                int leftElement = nums[i - k];
+                map.put(leftElement, map.get(leftElement) - 1);
+                if (map.get(leftElement) == 0) {
+                    map.remove(leftElement);
+                }
+                currentSum -= leftElement;
+            }
+
+            // Check if the current window has exactly k distinct elements
+            if (map.size() == k) {
+                result = Math.max(result, currentSum);
+            }
+        }
+
+        return result;
     }
 }
