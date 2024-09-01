@@ -9,6 +9,7 @@ public class SlidingWindow {
         System.out.println(res);
     }
 
+    // Sliding window approach
     private static int slidingWindow(int[] arr, int k) {
         int result = 0;
         int current = 0;
@@ -23,6 +24,7 @@ public class SlidingWindow {
         return result;
     }
 
+    // brute force approach
     private static int maxSumOfK(int[] arr, int k) {
         int maxCount = 0;
 
